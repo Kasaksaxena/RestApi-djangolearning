@@ -8,19 +8,23 @@ from django.core.serializers.json import DjangoJSONEncoder
 #api_view
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+#serializer
+from products.serializers import ProductSerializer
 # Create your views here.
 
-@api_view(["GET","POST"])
+@api_view(["GET"])
 def api_home(request,*args, **kwargs):
     """ 
     DRF API VIEW
     """
-    if request.method=="POST":
-        return Response({"detail": "GET not Allowed"},status=405)
-    model_data=Product.objects.all().order_by("?").first()   
+    #if request.method=="POST":
+        #return Response({"detail": "GET not Allowed"},status=405)
+    instance=Product.objects.all().order_by("?").first()   
     data={}
-    if model_data: 
-        data=model_to_dict(model_data, fields=['id','title',"price"])
+    if instance: 
+        data=ProductSerializer(instance).data
+        #data=model_to_dict(instance, fields=['id','title',"price"])
         return Response(data)
         # json_data_str=json.dumps(data, cls=DjangoJSONEncoder)
 
