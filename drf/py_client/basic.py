@@ -6,7 +6,7 @@ endpoint="http://localhost:8000/api/"
 #get_request=requests.get(endpoint, params={"abc": 123}, json={"query":"Hello World!"})
 #print(get_request.json()["message"])
 #print(get_request.text)
-get_request=requests.get(endpoint)
+get_request=requests.post(endpoint,json={"content":"Helloworld!","title":"123","price":"25.5"})
 print(get_request.json())
 
 #print(get_request.status_code)

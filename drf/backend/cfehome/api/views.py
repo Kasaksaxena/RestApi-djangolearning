@@ -13,20 +13,28 @@ from rest_framework.response import Response
 from products.serializers import ProductSerializer
 # Create your views here.
 
-@api_view(["GET"])
+@api_view(["POST"])
 def api_home(request,*args, **kwargs):
     """ 
     DRF API VIEW
     """
+    
+    serializer=ProductSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        print(serializer.data)
+        
+        data=serializer.data
     #if request.method=="POST":
         #return Response({"detail": "GET not Allowed"},status=405)
-    instance=Product.objects.all().order_by("?").first()   
-    data={}
-    if instance: 
-        data=ProductSerializer(instance).data
-        #data=model_to_dict(instance, fields=['id','title',"price"])
-        return Response(data)
-        # json_data_str=json.dumps(data, cls=DjangoJSONEncoder)
+    # instance=Product.objects.all().order_by("?").first()   
+    # data={}
+    # if instance: 
+    #     data=ProductSerializer(instance).data
+    #     #data=model_to_dict(instance, fields=['id','title',"price"])
+        
+        return Response(serializer.data)
+    return Response({"invalid":"not good data"},status=400)
+    #     # json_data_str=json.dumps(data, cls=DjangoJSONEncoder)
 
 # """print(request.GET)
 # body=request.body #byte string of json data
