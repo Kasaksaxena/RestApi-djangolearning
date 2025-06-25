@@ -17,6 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
           'editurl',
         #   'email',
           'pk',
+         # 'user',
           'title',
           'content',
           'price',
